@@ -1,6 +1,4 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   View,
   Text,
@@ -9,12 +7,11 @@ import {
   StyleSheet,
 } from 'react-native';
 
-// Screens
-const LoginScreen = ({navigation}) => {
+export default function TutorLoginScreen({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>TUTOR LOGIN</Text>
+        <Text style={styles.headerText}>TUTOR DASHBOARD</Text>
       </View>
       <View style={styles.card}>
         <Text style={styles.label}>EMAIL</Text>
@@ -27,51 +24,14 @@ const LoginScreen = ({navigation}) => {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Schedule')}>
+          onPress={() => navigation.navigate('TutorSchedule')}>
           <Text style={styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
-};
+}
 
-const ScheduleScreen = () => (
-  <View style={styles.container}>
-    <Text style={styles.headerText}>SCHEDULE SCREEN</Text>
-  </View>
-);
-
-const BlankScreen = () => (
-  <View style={styles.container}>
-    <Text style={styles.headerText}>BLANK SCREEN</Text>
-  </View>
-);
-
-const FAQScreen = () => (
-  <View style={styles.container}>
-    <Text style={styles.headerText}>FAQ SCREEN</Text>
-  </View>
-);
-
-// Navigator
-const Stack = createNativeStackNavigator();
-
-const AppNavigator = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Login"
-        screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Schedule" component={ScheduleScreen} />
-        <Stack.Screen name="Blank" component={BlankScreen} />
-        <Stack.Screen name="FAQ" component={FAQScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
-
-// Styles
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: 'white', paddingTop: 50},
   header: {alignItems: 'center', padding: 10, borderBottomWidth: 1},
@@ -88,5 +48,3 @@ const styles = StyleSheet.create({
   },
   buttonText: {color: 'white'},
 });
-
-export default AppNavigator;
