@@ -1,3 +1,21 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json"
+  "compilerOptions": {
+    "types": [
+      "node",
+      "react"
+    ],
+    "target": "esnext",
+    "module": "commonjs",
+    "jsx": "react-native", // or "preserve" if using Babel
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "typeRoots": ["node_modules/@types"],
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src/**/*"], // This includes .js files
+  "exclude": ["node_modules", "dist"]
 }
