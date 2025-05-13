@@ -1,21 +1,17 @@
 {
   "compilerOptions": {
-    "types": [
-      "node",
-      "react"
-    ],
     "target": "esnext",
     "module": "commonjs",
-    "jsx": "react-native", // or "preserve" if using Babel
+    "jsx": "react-native",
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "baseUrl": ".",
-    "typeRoots": ["node_modules/@types"],
+    "lib": ["esnext", "dom"],
     "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true
+    "types": ["react", "react-native", "react-test-renderer"]
   },
-  "include": ["src/**/*"], // This includes .js files
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*", "react.d.ts"],
+  "exclude": ["node_modules"]
 }

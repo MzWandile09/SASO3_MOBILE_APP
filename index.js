@@ -1,5 +1,9 @@
-import {AppRegistry} from 'react-native';
-import App from './src/app/App'; // Make sure the path is correct
-import {name as appName} from './app.json';
+//SASO3 Mobile App/src/navigation/AppNavigator.js
 
-AppRegistry.registerComponent(appName, () => App);
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App'; // Ensure this path is correct
+
+// Render the App component into the DOM element with the id 'root'
+ReactDOM.render(<App />, document.getElementById('root')); // Corrected semicolon
