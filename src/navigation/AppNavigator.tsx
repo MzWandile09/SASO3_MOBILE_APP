@@ -1,9 +1,6 @@
-//SASO3 Mobile App/src/navigation/AppNavigator.js
-
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import { StackNavigationProp } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 // Screens
 import LoginScreen from '../screens/auth/LoginScreen';
@@ -21,14 +18,30 @@ import StudentStack from './StudentStack';
 import TutorStack from './TutorStack';
 import AdminStack from './AdminStack';
 
-const Stack = createNativeStackNavigator();
+type RootStackParamList = {
+  Login: undefined;
+  TutorLogin: undefined;
+  Auth: undefined;
+  Student: undefined;
+  Tutor: undefined;
+  Schedule: undefined;
+  TutorSchedule: undefined;
+  Blank: undefined;
+  TutorBlank: undefined;
+  FAQ: undefined;
+  TutorFAQ: undefined;
+  Admin: undefined;
+};
 
-const AppNavigator = () => {
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const AppNavigator: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Login"
-        screenOptions={{headerShown: false}}>
+        screenOptions={{ headerShown: false }}
+      >
         {/* Authentication Screens */}
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="TutorLogin" component={TutorLoginScreen} />
@@ -45,14 +58,14 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Student"
           component={StudentStack}
-          options={{headerTitle: 'Student Portal', headerShown: true}}
+          options={{ headerTitle: 'Student Portal', headerShown: true }}
         />
 
         {/* Tutor Portal */}
         <Stack.Screen
           name="Tutor"
           component={TutorStack}
-          options={{headerTitle: 'Tutor Portal', headerShown: true}}
+          options={{ headerTitle: 'Tutor Portal', headerShown: true }}
         />
         <Stack.Screen name="Schedule" component={ScheduleScreen} />
         <Stack.Screen name="TutorSchedule" component={TutorScheduleScreen} />
@@ -65,7 +78,7 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Admin"
           component={AdminStack}
-          options={{headerTitle: 'Admin Portal', headerShown: true}}
+          options={{ headerTitle: 'Admin Portal', headerShown: true }}
         />
       </Stack.Navigator>
     </NavigationContainer>
