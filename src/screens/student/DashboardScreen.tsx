@@ -1,73 +1,109 @@
-// src/screens/student/DashboardScreen.js
-import React, { useEffect } from 'react';
-import {
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-} from 'react-native';
-import { Header, AttendanceProgress, ScheduleItem } from '../../components';
-import { colors } from '../../constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchSchedule, getAttendance } from '../../redux/actions';
-import { GlobalStyles } from '../../styles';
+import React, { useEffect, useState } from 'react';
+import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
 
-const DashboardScreen = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const { user, schedule, attendance } = useSelector(state => state.student);
+interface SchedulingStats {
+  total: number;
+  pending: number;
+  approved: number;
+  rejected: number;
+}
 
+const DashboardScreen: React.FC = () => {
+  // This state simulates scheduling information.
+  // In practice, you could fetch these numbers from an API, Redux store, or Context.
+  const [schedulingStats, setSchedulingStats] = useState<SchedulingStats>({
+    total: 0,
+    pending: 0,
+    approved: 0,
+    rejected: 0,
+  });
+
+  // Simulate fetching scheduling stats when the component mounts.
   useEffect(() => {
-    dispatch(fetchSchedule());
-    dispatch(getAttendance());
-    if (!user?.bioVerified) {
-      navigation.navigate('BioVerification');
-    }
-  }, [dispatch, navigation, user?.bioVerified]);
+    // Replace this with your actual data fetching logic.
+    const fetchSchedulingData = () => {
+      const data: SchedulingStats = {
+        total: 5,
+        pending: 3,
+        approved: 1,
+        rejected: 1,
+      };
+      setSchedulingStats(data);
+    };
+
+    fetchSchedulingData();
+  }, []);
 
   return (
-    <View style={GlobalStyles.container}>
-      <Header
-        title="Student Dashboard"
-        showNotification={true}
-        onProfilePress={() => navigation.navigate('ProfileSettings')}
-      />
-      <ScrollView>
-        {/* Attendance Summary */}
-        <AttendanceProgress
-          current={attendance?.attended}
-          total={attendance?.total}
-          style={GlobalStyles.card}
-        />
-        {/* Class Schedule */}
-        <View style={GlobalStyles.section}>
-          <Header.Subtitle>Today's Schedule</Header.Subtitle>
-          {schedule.map((item, index) => (
-            <ScheduleItem
-              key={index}
-              time={item.time}
-              course={item.course}
-              location={item.location}
-              status={item.status}
-            />
-          ))}
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.header}>Dashboard</Text>
+      <View style={styles.cardContainer}>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Attendance Today</Text>
+          <Text style={styles.cardData}>Present: 3 / Absent: 1</Text>
         </View>
-        {/* Quick Actions */}
-        <View style={GlobalStyles.row}>
-          <TouchableOpacity
-            style={[GlobalStyles.button, { backgroundColor: colors.primary }]}
-            onPress={() => navigation.navigate('Messaging')}>
-            <Header.Subtitle style={{ color: colors.white }}>Messages</Header.Subtitle>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[GlobalStyles.button, { backgroundColor: colors.secondary }]}
-            onPress={() => navigation.navigate('StudentFAQ')}>
-            <Header.Subtitle style={{ color: colors.white }}>FAQs</Header.Subtitle>
-          </TouchableOpacity>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Upcoming Classes</Text>
+          <Text style={styles.cardData}>3 Classes</Text>
         </View>
-      </ScrollView>
-    </View>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Notices</Text>
+          <Text style={styles.cardData}>2 New</Text>
+        </View>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Scheduled Classes</Text>
+          <Text style={styles.cardData}>
+            Total: {schedulingStats.total}{'\n'}
+            Pending: {schedulingStats.pending}{'\n'}
+            Approved: {schedulingStats.approved}{'\n'}
+            Rejected: {schedulingStats.rejected}
+          </Text>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
 export default DashboardScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#e6f7ff',
+    padding: 16,
+  },
+  header: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    alignSelf: 'center',
+    color: '#003366',
+  },
+  cardContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  card: {
+    backgroundColor: '#fff',
+    width: '48%',
+    marginBottom: 16,
+    padding: 16,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 8,
+    color: '#333',
+  },
+  cardData: {
+    fontSize: 16,
+    color: '#666',
+  },
+});
